@@ -1,0 +1,143 @@
+{
+  "version": "36.0.0",
+  "artifacts": {
+    "VanityNumbersStack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "VanityNumbersStack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "VanityNumbersStack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "VanityNumbersStack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/38f1ecf76d6bb86599fe4e366cb33fe8ea0968b672f27b9dcdb2b966507c3957.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "VanityNumbersStack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "VanityNumbersStack.assets"
+      ],
+      "metadata": {
+        "/VanityNumbersStack/VanityBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "VanityBucketDC38B422"
+          }
+        ],
+        "/VanityNumbersStack/VanityBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "VanityBucketPolicy72C15C1C"
+          }
+        ],
+        "/VanityNumbersStack/VanityBucket/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "VanityBucketAutoDeleteObjectsCustomResource7A1F4584"
+          }
+        ],
+        "/VanityNumbersStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+          }
+        ],
+        "/VanityNumbersStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
+          }
+        ],
+        "/VanityNumbersStack/addTxtFile/AwsCliLayer/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "addTxtFileAwsCliLayer7AFD50F5"
+          }
+        ],
+        "/VanityNumbersStack/addTxtFile/CustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "addTxtFileCustomResourceA40FD15E"
+          }
+        ],
+        "/VanityNumbersStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265"
+          }
+        ],
+        "/VanityNumbersStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF"
+          }
+        ],
+        "/VanityNumbersStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C81C01536"
+          }
+        ],
+        "/VanityNumbersStack/VanityTable/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "VanityTable24E44873"
+          }
+        ],
+        "/VanityNumbersStack/createVanity/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "createVanityServiceRoleACF710B9"
+          }
+        ],
+        "/VanityNumbersStack/createVanity/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "createVanityServiceRoleDefaultPolicy35CC778C"
+          }
+        ],
+        "/VanityNumbersStack/createVanity/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "createVanityC8BEF51B"
+          }
+        ],
+        "/VanityNumbersStack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/VanityNumbersStack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "VanityNumbersStack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}
