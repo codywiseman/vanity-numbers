@@ -6,7 +6,6 @@ The Vanity Numbers Application is a serverless solution designed to convert stan
 ## Features
 - **Automatic Generation**: Automatically generates vanity numbers for the last four digits of incoming phone numbers.
 - **AWS Integration**: Leverages AWS services such as Lambda, DynamoDB, and S3 to store and retrieve generated vanity numbers.
-- **Customizable**: Offers customization options for the mapping of numbers to letters, allowing for different languages or preferences.
 - **Scalable**: Built on AWS, the application can scale to handle large volumes of phone numbers efficiently.
 
 ## Architecture
