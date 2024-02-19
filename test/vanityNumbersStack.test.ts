@@ -1,6 +1,6 @@
 import { App } from 'aws-cdk-lib';
 import { VanityNumbersStack } from '../lib/VanityNumbersStack';
-import { Match, Template } from 'aws-cdk-lib/assertions';
+import { Template } from 'aws-cdk-lib/assertions';
 
 describe('Vanity Number', () => {
 
