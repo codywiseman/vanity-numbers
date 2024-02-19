@@ -1,6 +1,8 @@
 import * as AWS from 'aws-sdk';
-const fs = require('fs');
-const path = require('path');
+import * as fs from 'fs';
+import * as path from 'path';
+import { ConnectContactFlowEvent } from 'aws-lambda'
+import { error } from 'console';
 
 // Instantiate S3 client to interact with S3 bucket
 const s3 = new AWS.S3();
@@ -8,7 +10,7 @@ const s3 = new AWS.S3();
 const dynamoDB = new AWS.DynamoDB();
 
 //Export the main getVanityNumbers function as handler
-exports.handler = async (event: any): Promise<{}> => {
+exports.handler = async (event: ConnectContactFlowEvent): Promise<{}> => {
   return getVanityNumbers(event);
 }
 
@@ -40,11 +42,14 @@ function listCombinations(digits: string): string[] {
   }
   
   function generateCombinations(combination: string, index: number) {
+    // Base case - if the current index equals the length of the last four digits,
+    // add the current combination to the result array and return.
     if (index === lastFourDigits.length) {
       result.push(combination);
       return;
     }
     
+    // Recursively iterate over all possible letters for the current digit
     const currentDigit = lastFourDigits[index];
     const letters = digitToLetters[currentDigit];
     
@@ -58,7 +63,10 @@ function listCombinations(digits: string): string[] {
   return result;
 }
 
+// Retrieves the four-letter.txt file from S3
 async function retrieveWordsfromS3(): Promise<string[]> {
+  // Currently retrieving the file from local directory when testing
+  // Ideally have this testing logic isolated to test file so it does not exist in the deployed lambda
   if(process.env.TESTING) {
     const filePath = path.resolve(__dirname, '../resources/four-letter.txt');
     const fourLetterWords = fs.readFileSync(filePath, 'utf8').trim().split(/\s+/);
@@ -95,6 +103,8 @@ async function retrieveWordsfromS3(): Promise<string[]> {
   }
 }
 
+// Compare generated combos to list of 4 letter words
+// Returns max of 5 matches
 function compareCombinations(combinations: string[], words: string[]): string[] {
   const existingCombinations: string[] = [];
   for (let i = 0; i < combinations.length; i++) {
@@ -109,6 +119,7 @@ function compareCombinations(combinations: string[], words: string[]): string[] 
   return existingCombinations;
 }
 
+// Join prefix of phone number with last generated vanity word
 function formatMatches(matches: string[], digits: string): string[] {
   const prefix = digits.slice(0, -4);
   const formattedMatches: string[] = [];
@@ -118,6 +129,7 @@ function formatMatches(matches: string[], digits: string): string[] {
   return formattedMatches;
 }
 
+// Save vanity number to DynamoDB
 async function saveVanityToDynamo(customerEndpoint, formattedMatches): Promise<void>  {
   if(process.env.TESTING) {
     // If running test on lambda, skip saving number to dynamo for now
@@ -153,12 +165,15 @@ async function saveVanityToDynamo(customerEndpoint, formattedMatches): Promise<v
   }
 }
 
+// Generate SSML prompt that will play in Connect
 function getConnectPrompt(formattedMatches: string[]): string {
   let prompt = ''
 
+  // If no vanity number was generated, return prompt informaing caller no vanity numbers available
   if(formattedMatches.length === 0) {
-    prompt = 'There are no vanity numbers available for your phone number'
+    prompt = '<speak>There are no vanity numbers available for your phone number</speak>';
   } else {
+    // Append all generated vanity numbers to prompt
     let numbers = '';
     formattedMatches.forEach(match => {
       const prefix = match.slice(0, -4)
@@ -172,9 +187,7 @@ function getConnectPrompt(formattedMatches: string[]): string {
 }
 
 async function getVanityNumbers(event: any): Promise<{prompt: string}> {
-
   const customerEndpoint = event.Details.ContactData.Attributes.Number;
-  
   const combinations = listCombinations(customerEndpoint);
   const words = await retrieveWordsfromS3();
   const matches = compareCombinations(combinations, words);
@@ -182,7 +195,5 @@ async function getVanityNumbers(event: any): Promise<{prompt: string}> {
   
   await saveVanityToDynamo(customerEndpoint, formattedMatches);
 
-  const connectPrompt = getConnectPrompt(formattedMatches);
-
-  return { prompt: connectPrompt };
+  return { prompt: getConnectPrompt(formattedMatches) };
 }
