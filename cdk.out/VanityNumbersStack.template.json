@@ -15,7 +15,10 @@
     ]
    },
    "UpdateReplacePolicy": "Delete",
-   "DeletionPolicy": "Delete"
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "VanityNumbersStack/VanityBucket/Resource"
+   }
   },
   "VanityBucketPolicy72C15C1C": {
    "Type": "AWS::S3::BucketPolicy",
@@ -27,10 +30,10 @@
      "Statement": [
       {
        "Action": [
-        "s3:PutBucketPolicy",
+        "s3:DeleteObject*",
         "s3:GetBucket*",
         "s3:List*",
-        "s3:DeleteObject*"
+        "s3:PutBucketPolicy"
        ],
        "Effect": "Allow",
        "Principal": {
@@ -67,6 +70,9 @@
      ],
      "Version": "2012-10-17"
     }
+   },
+   "Metadata": {
+    "aws:cdk:path": "VanityNumbersStack/VanityBucket/Policy/Resource"
    }
   },
   "VanityBucketAutoDeleteObjectsCustomResource7A1F4584": {
@@ -86,7 +92,10 @@
     "VanityBucketPolicy72C15C1C"
    ],
    "UpdateReplacePolicy": "Delete",
-   "DeletionPolicy": "Delete"
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "VanityNumbersStack/VanityBucket/AutoDeleteObjectsCustomResource/Default"
+   }
   },
   "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092": {
    "Type": "AWS::IAM::Role",
@@ -108,6 +117,9 @@
       "Fn::Sub": "arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
      }
     ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "VanityNumbersStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role"
    }
   },
   "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F": {
@@ -144,7 +156,12 @@
    },
    "DependsOn": [
     "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
-   ]
+   ],
+   "Metadata": {
+    "aws:cdk:path": "VanityNumbersStack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler",
+    "aws:asset:path": "asset.b7f33614a69548d6bafe224d751a7ef238cde19097415e553fe8b63a4c8fd8a6",
+    "aws:asset:property": "Code"
+   }
   },
   "addTxtFileAwsCliLayer7AFD50F5": {
    "Type": "AWS::Lambda::LayerVersion",
@@ -156,6 +173,12 @@
      "S3Key": "3322b7049fb0ed2b7cbb644a2ada8d1116ff80c32dca89e6ada846b5de26f961.zip"
     },
     "Description": "/opt/awscli/aws"
+   },
+   "Metadata": {
+    "aws:cdk:path": "VanityNumbersStack/addTxtFile/AwsCliLayer/Resource",
+    "aws:asset:path": "asset.3322b7049fb0ed2b7cbb644a2ada8d1116ff80c32dca89e6ada846b5de26f961.zip",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Content"
    }
   },
   "addTxtFileCustomResourceA40FD15E": {
@@ -173,7 +196,7 @@
      }
     ],
     "SourceObjectKeys": [
-     "8ef387aef5bc6a9346690c7f2023ca189ead0e42395f6af62db225ea7e6499b7.zip"
+     "672139e0ceee6c3748d7028d2f2e4ce11f95f0cf46d17cde8d4892e3d87b6886.zip"
     ],
     "DestinationBucketName": {
      "Ref": "VanityBucketDC38B422"
@@ -181,7 +204,10 @@
     "Prune": true
    },
    "UpdateReplacePolicy": "Delete",
-   "DeletionPolicy": "Delete"
+   "DeletionPolicy": "Delete",
+   "Metadata": {
+    "aws:cdk:path": "VanityNumbersStack/addTxtFile/CustomResource/Default"
+   }
   },
   "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265": {
    "Type": "AWS::IAM::Role",
@@ -212,6 +238,9 @@
       ]
      }
     ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "VanityNumbersStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/Resource"
    }
   },
   "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF": {
@@ -221,8 +250,8 @@
      "Statement": [
       {
        "Action": [
-        "s3:GetObject*",
         "s3:GetBucket*",
+        "s3:GetObject*",
         "s3:List*"
        ],
        "Effect": "Allow",
@@ -238,7 +267,8 @@
            ":s3:::",
            {
             "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
-           }
+           },
+           "/*"
           ]
          ]
         },
@@ -253,8 +283,7 @@
            ":s3:::",
            {
             "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
-           },
-           "/*"
+           }
           ]
          ]
         }
@@ -262,16 +291,16 @@
       },
       {
        "Action": [
-        "s3:GetObject*",
-        "s3:GetBucket*",
-        "s3:List*",
+        "s3:Abort*",
         "s3:DeleteObject*",
+        "s3:GetBucket*",
+        "s3:GetObject*",
+        "s3:List*",
         "s3:PutObject",
         "s3:PutObjectLegalHold",
         "s3:PutObjectRetention",
         "s3:PutObjectTagging",
-        "s3:PutObjectVersionTagging",
-        "s3:Abort*"
+        "s3:PutObjectVersionTagging"
        ],
        "Effect": "Allow",
        "Resource": [
@@ -306,6 +335,9 @@
       "Ref": "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265"
      }
     ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "VanityNumbersStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/ServiceRole/DefaultPolicy/Resource"
    }
   },
   "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C81C01536": {
@@ -340,7 +372,13 @@
    "DependsOn": [
     "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRoleDefaultPolicy88902FDF",
     "CustomCDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756CServiceRole89A01265"
-   ]
+   ],
+   "Metadata": {
+    "aws:cdk:path": "VanityNumbersStack/Custom::CDKBucketDeployment8693BB64968944B69AAFB0CC9EB8756C/Resource",
+    "aws:asset:path": "asset.e976a796f036a5efbf44b99e44cfb5a961df08d8dbf7cd37e60bf216fb982a00",
+    "aws:asset:is-bundled": false,
+    "aws:asset:property": "Code"
+   }
   },
   "VanityTable24E44873": {
    "Type": "AWS::DynamoDB::Table",
@@ -363,7 +401,10 @@
     }
    },
    "UpdateReplacePolicy": "Retain",
-   "DeletionPolicy": "Retain"
+   "DeletionPolicy": "Retain",
+   "Metadata": {
+    "aws:cdk:path": "VanityNumbersStack/VanityTable/Resource"
+   }
   },
   "createVanityServiceRoleACF710B9": {
    "Type": "AWS::IAM::Role",
@@ -394,6 +435,9 @@
       ]
      }
     ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "VanityNumbersStack/createVanity/ServiceRole/Resource"
    }
   },
   "createVanityServiceRoleDefaultPolicy35CC778C": {
@@ -403,8 +447,8 @@
      "Statement": [
       {
        "Action": [
-        "s3:GetObject*",
         "s3:GetBucket*",
+        "s3:GetObject*",
         "s3:List*"
        ],
        "Effect": "Allow",
@@ -434,17 +478,17 @@
       {
        "Action": [
         "dynamodb:BatchGetItem",
+        "dynamodb:BatchWriteItem",
+        "dynamodb:ConditionCheckItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:DescribeTable",
+        "dynamodb:GetItem",
         "dynamodb:GetRecords",
         "dynamodb:GetShardIterator",
-        "dynamodb:Query",
-        "dynamodb:GetItem",
-        "dynamodb:Scan",
-        "dynamodb:ConditionCheckItem",
-        "dynamodb:BatchWriteItem",
         "dynamodb:PutItem",
-        "dynamodb:UpdateItem",
-        "dynamodb:DeleteItem",
-        "dynamodb:DescribeTable"
+        "dynamodb:Query",
+        "dynamodb:Scan",
+        "dynamodb:UpdateItem"
        ],
        "Effect": "Allow",
        "Resource": [
@@ -468,6 +512,9 @@
       "Ref": "createVanityServiceRoleACF710B9"
      }
     ]
+   },
+   "Metadata": {
+    "aws:cdk:path": "VanityNumbersStack/createVanity/ServiceRole/DefaultPolicy/Resource"
    }
   },
   "createVanityC8BEF51B": {
@@ -477,7 +524,7 @@
      "S3Bucket": {
       "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
      },
-     "S3Key": "e07f35952f0e4170c994c7db9fec703290ead32eb3d42a709c8bd0cc466d911d.zip"
+     "S3Key": "53a7933d8feb1174ed332fd4895cecf28c5d959f8d9cef7ecb920ce4a69e0520.zip"
     },
     "Environment": {
      "Variables": {
@@ -502,6 +549,232 @@
    "DependsOn": [
     "createVanityServiceRoleDefaultPolicy35CC778C",
     "createVanityServiceRoleACF710B9"
+   ],
+   "Metadata": {
+    "aws:cdk:path": "VanityNumbersStack/createVanity/Resource",
+    "aws:asset:path": "/Users/cody.wiseman/Documents/workspace/training/vanity-numbers",
+    "aws:asset:is-bundled": true,
+    "aws:asset:property": "Code"
+   }
+  },
+  "CDKMetadata": {
+   "Type": "AWS::CDK::Metadata",
+   "Properties": {
+    "Analytics": "v2:deflate64:H4sIAAAAAAAA/1VQTW/CMAz9LdyDx8dlO0InTtOE6LRr5SYGGdJkqlOqKup/n9pAu53e87Pl5+cNrDcbWC2wlaU2t6XlEmIeUN8UtlJE2ULcN/pGQWVn92AJjt6y7mb5Uadij0K9km0RDf1Y31XkAqTW+yQoFKEgsBugVxar0iDE7Ow+sKP6m2ph71TO7mIpeHdonA6DMpHsPIm9YqwgnrylQR5xPjGxXpnOYeVNCfELyzQ5kqd74byhq8DnCPPurJHgqxOJb2qdDCb+r3Ws/Z0N1cMD1BgsD3hhd3ka2CFaga1oy7BrJbM8plV/l2feGU7Ow0FwlZf7+hXWb7BaXIV5WTcucEVwSvgLZbxsDMcBAAA="
+   },
+   "Metadata": {
+    "aws:cdk:path": "VanityNumbersStack/CDKMetadata/Default"
+   },
+   "Condition": "CDKMetadataAvailable"
+  }
+ },
+ "Conditions": {
+  "CDKMetadataAvailable": {
+   "Fn::Or": [
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "af-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-northeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ap-southeast-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "ca-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "cn-northwest-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-north-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "eu-west-3"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "il-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-central-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "me-south-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "sa-east-1"
+       ]
+      }
+     ]
+    },
+    {
+     "Fn::Or": [
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-east-2"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-1"
+       ]
+      },
+      {
+       "Fn::Equals": [
+        {
+         "Ref": "AWS::Region"
+        },
+        "us-west-2"
+       ]
+      }
+     ]
+    }
    ]
   }
  },

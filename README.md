@@ -33,7 +33,12 @@ git clone https://github.com/codywiseman/vanity-numbers.git
 cd vanity-number && npm install
 ```
 
-3. Deploy the application using AWS CDK:
+3. Build and deploy the application using AWS CDK:
+
+```bash
+npm run build
+```
+Note: You may need to make sure Docker is running on your machine before running the build script
 
 ```bash
 npm run deploy
@@ -44,7 +49,7 @@ npm run deploy
 2. Select the instance where you want to import the flow.
 3. In the navigation pane, choose 'Contact flows'.
 4. In the 'Contact flows' section, choose 'Create contact flow'.
-5. Import the provided contact flow file by clicking on the 'Import flow' button at the top right.
+5. Import the provided contact flow file in the reources folder by clicking on the 'Import flow' button at the top right.
 6. Upload the provided contact flow file provide in this repository then save the contact flow.
 
 ### Adding the Lambda Function to the Contact Flow
@@ -78,3 +83,4 @@ To avoid incurring unnecessary charges, you should delete the AWS resources used
    cdk destroy
    ```
 
+## Project Discussion

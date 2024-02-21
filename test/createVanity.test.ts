@@ -32,7 +32,7 @@ describe('createVanityLambda', () => {
 
     const res = await handler(contactFlowEvent)
 
-    expect(res).toEqual({"prompt": "There are no vanity numbers available for your phone number"})
+    expect(res).toEqual({"prompt": "<speak>There are no vanity numbers available for your phone number</speak>"})
   })
 })
 

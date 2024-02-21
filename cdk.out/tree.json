@@ -52,10 +52,10 @@
                           "Statement": [
                             {
                               "Action": [
-                                "s3:PutBucketPolicy",
+                                "s3:DeleteObject*",
                                 "s3:GetBucket*",
                                 "s3:List*",
-                                "s3:DeleteObject*"
+                                "s3:PutBucketPolicy"
                               ],
                               "Effect": "Allow",
                               "Principal": {
@@ -350,8 +350,8 @@
                               "Statement": [
                                 {
                                   "Action": [
-                                    "s3:GetObject*",
                                     "s3:GetBucket*",
+                                    "s3:GetObject*",
                                     "s3:List*"
                                   ],
                                   "Effect": "Allow",
@@ -367,7 +367,8 @@
                                           ":s3:::",
                                           {
                                             "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
-                                          }
+                                          },
+                                          "/*"
                                         ]
                                       ]
                                     },
@@ -382,8 +383,7 @@
                                           ":s3:::",
                                           {
                                             "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
-                                          },
-                                          "/*"
+                                          }
                                         ]
                                       ]
                                     }
@@ -391,16 +391,16 @@
                                 },
                                 {
                                   "Action": [
-                                    "s3:GetObject*",
-                                    "s3:GetBucket*",
-                                    "s3:List*",
+                                    "s3:Abort*",
                                     "s3:DeleteObject*",
+                                    "s3:GetBucket*",
+                                    "s3:GetObject*",
+                                    "s3:List*",
                                     "s3:PutObject",
                                     "s3:PutObjectLegalHold",
                                     "s3:PutObjectRetention",
                                     "s3:PutObjectTagging",
-                                    "s3:PutObjectVersionTagging",
-                                    "s3:Abort*"
+                                    "s3:PutObjectVersionTagging"
                                   ],
                                   "Effect": "Allow",
                                   "Resource": [
@@ -640,8 +640,8 @@
                               "Statement": [
                                 {
                                   "Action": [
-                                    "s3:GetObject*",
                                     "s3:GetBucket*",
+                                    "s3:GetObject*",
                                     "s3:List*"
                                   ],
                                   "Effect": "Allow",
@@ -671,17 +671,17 @@
                                 {
                                   "Action": [
                                     "dynamodb:BatchGetItem",
+                                    "dynamodb:BatchWriteItem",
+                                    "dynamodb:ConditionCheckItem",
+                                    "dynamodb:DeleteItem",
+                                    "dynamodb:DescribeTable",
+                                    "dynamodb:GetItem",
                                     "dynamodb:GetRecords",
                                     "dynamodb:GetShardIterator",
-                                    "dynamodb:Query",
-                                    "dynamodb:GetItem",
-                                    "dynamodb:Scan",
-                                    "dynamodb:ConditionCheckItem",
-                                    "dynamodb:BatchWriteItem",
                                     "dynamodb:PutItem",
-                                    "dynamodb:UpdateItem",
-                                    "dynamodb:DeleteItem",
-                                    "dynamodb:DescribeTable"
+                                    "dynamodb:Query",
+                                    "dynamodb:Scan",
+                                    "dynamodb:UpdateItem"
                                   ],
                                   "Effect": "Allow",
                                   "Resource": [
@@ -760,7 +760,7 @@
                       "s3Bucket": {
                         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
                       },
-                      "s3Key": "e07f35952f0e4170c994c7db9fec703290ead32eb3d42a709c8bd0cc466d911d.zip"
+                      "s3Key": "53a7933d8feb1174ed332fd4895cecf28c5d959f8d9cef7ecb920ce4a69e0520.zip"
                     },
                     "environment": {
                       "variables": {
@@ -792,6 +792,32 @@
             "constructInfo": {
               "fqn": "aws-cdk-lib.aws_lambda_nodejs.NodejsFunction",
               "version": "2.122.0"
+            }
+          },
+          "CDKMetadata": {
+            "id": "CDKMetadata",
+            "path": "VanityNumbersStack/CDKMetadata",
+            "children": {
+              "Default": {
+                "id": "Default",
+                "path": "VanityNumbersStack/CDKMetadata/Default",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnResource",
+                  "version": "2.122.0"
+                }
+              },
+              "Condition": {
+                "id": "Condition",
+                "path": "VanityNumbersStack/CDKMetadata/Condition",
+                "constructInfo": {
+                  "fqn": "aws-cdk-lib.CfnCondition",
+                  "version": "2.122.0"
+                }
+              }
+            },
+            "constructInfo": {
+              "fqn": "constructs.Construct",
+              "version": "10.3.0"
             }
           },
           "BootstrapVersion": {

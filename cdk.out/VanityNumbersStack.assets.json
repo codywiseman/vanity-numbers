@@ -40,33 +40,33 @@
         }
       }
     },
-    "8ef387aef5bc6a9346690c7f2023ca189ead0e42395f6af62db225ea7e6499b7": {
+    "672139e0ceee6c3748d7028d2f2e4ce11f95f0cf46d17cde8d4892e3d87b6886": {
       "source": {
-        "path": "asset.8ef387aef5bc6a9346690c7f2023ca189ead0e42395f6af62db225ea7e6499b7",
+        "path": "asset.672139e0ceee6c3748d7028d2f2e4ce11f95f0cf46d17cde8d4892e3d87b6886",
         "packaging": "zip"
       },
       "destinations": {
         "current_account-current_region": {
           "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
-          "objectKey": "8ef387aef5bc6a9346690c7f2023ca189ead0e42395f6af62db225ea7e6499b7.zip",
+          "objectKey": "672139e0ceee6c3748d7028d2f2e4ce11f95f0cf46d17cde8d4892e3d87b6886.zip",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
         }
       }
     },
-    "e07f35952f0e4170c994c7db9fec703290ead32eb3d42a709c8bd0cc466d911d": {
+    "53a7933d8feb1174ed332fd4895cecf28c5d959f8d9cef7ecb920ce4a69e0520": {
       "source": {
-        "path": "asset.e07f35952f0e4170c994c7db9fec703290ead32eb3d42a709c8bd0cc466d911d",
+        "path": "/Users/cody.wiseman/Documents/workspace/training/vanity-numbers",
         "packaging": "zip"
       },
       "destinations": {
         "current_account-current_region": {
           "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
-          "objectKey": "e07f35952f0e4170c994c7db9fec703290ead32eb3d42a709c8bd0cc466d911d.zip",
+          "objectKey": "53a7933d8feb1174ed332fd4895cecf28c5d959f8d9cef7ecb920ce4a69e0520.zip",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
         }
       }
     },
-    "38f1ecf76d6bb86599fe4e366cb33fe8ea0968b672f27b9dcdb2b966507c3957": {
+    "4cc405e465096155740a5246a9665e44944fc55faf9c16332998309eda1b107a": {
       "source": {
         "path": "VanityNumbersStack.template.json",
         "packaging": "file"
@@ -74,7 +74,7 @@
       "destinations": {
         "current_account-current_region": {
           "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
-          "objectKey": "38f1ecf76d6bb86599fe4e366cb33fe8ea0968b672f27b9dcdb2b966507c3957.json",
+          "objectKey": "4cc405e465096155740a5246a9665e44944fc55faf9c16332998309eda1b107a.json",
           "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
         }
       }
